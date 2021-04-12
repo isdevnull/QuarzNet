@@ -49,14 +49,6 @@ class DataCollate:
       input_lengths.append(mspec.shape[0] // 2)
       targets.append(torch.Tensor(self.text_transform.text_to_int(utterance)))
       target_lengths.append(len(targets[-1]))
-      if self.spec_aug:
-        spectrograms.append(mspec11)
-        spectrograms.append(mspec09)
-        for i in range(2):
-          input_lengths.append(mspec.shape[0] // 2)
-          targets.append(torch.Tensor(self.text_transform.text_to_int(utterance)))
-          target_lengths.append(len(targets[-1]))
-
 
     spectrograms = nn.utils.rnn.pad_sequence(spectrograms, batch_first=True).transpose(1,2)
     targets = nn.utils.rnn.pad_sequence(targets, batch_first=True)
